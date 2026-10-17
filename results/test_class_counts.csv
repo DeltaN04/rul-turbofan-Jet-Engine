@@ -1,0 +1,5 @@
+fd,n_engines,safe,warning,critical,leq30,note
+FD001,100,12210,779,107,332,counts over ALL test rows; last-cycle counts differ
+FD002,259,31405,2135,451,1087,counts over ALL test rows; last-cycle counts differ
+FD003,100,15817,671,108,291,counts over ALL test rows; last-cycle counts differ
+FD004,248,38964,1916,334,864,counts over ALL test rows; last-cycle counts differ

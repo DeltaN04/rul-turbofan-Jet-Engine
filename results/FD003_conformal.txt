@@ -1,0 +1,2 @@
+90% Mondrian interval: mean half-width=86.13 empirical coverage (capped RUL, last cycle)=0.980 ± 0.014 (binomial SE, n=100)
+95% Mondrian interval: mean half-width=122.93 empirical coverage (capped RUL, last cycle)=0.980 ± 0.014 (binomial SE, n=100)

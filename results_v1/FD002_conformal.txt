@@ -1,0 +1,2 @@
+90% interval half-width=31.82 empirical coverage (capped RUL)=0.907
+95% interval half-width=38.74 empirical coverage (capped RUL)=0.950

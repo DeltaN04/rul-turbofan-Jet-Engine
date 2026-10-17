@@ -1,0 +1,5 @@
+fd,tuned_threshold,cost_default(assumed),cost_tuned
+FD001,34.0,21.0,12.0
+FD002,30.0,65.0,65.0
+FD003,34.0,21.0,2.0
+FD004,30.0,109.0,109.0

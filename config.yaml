@@ -1,0 +1,30 @@
+seed: 42
+rul_cap: 125
+rul_cap_ablation: [100, 125, 130]
+window_length: 30
+window_ablation: [20, 30, 50]
+rolling_windows: [10, 30]
+smooth_alpha: 0.3
+kmeans_k: 6
+test_size: 0.2
+n_splits_cv: 5
+seeds: [42, 43, 44]
+deep_epochs: 60
+deep_patience: 8
+deep_subsample_frac: 0.6
+bootstrap_resamples: 1000
+sensors_drop_fd001: []
+variance_threshold: 1.0e-06
+class_thresholds:
+  warning_low: 20
+  warning_high: 50
+  binary: 30
+cost_matrix:
+  missed_failure: 10.0
+  false_alarm: 1.0
+  late_warning_cost: 2.0
+randomized_search_iter: 12
+artifacts:
+  figures: figures
+  results: results
+  models: models

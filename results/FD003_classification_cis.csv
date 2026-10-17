@@ -1,0 +1,9 @@
+fd,task,approach,model,metric,mean,lo,hi
+FD003,3class,direct,hgb,critical_recall,1.0,1.0,1.0
+FD003,3class,direct,hgb,macro_f1,0.9154883624675092,0.8337568987593272,0.9799034865296834
+FD003,3class,regress-threshold,hgb-via-RUL,critical_recall,0.8465048945679364,0.6247596153846154,1.0
+FD003,3class,regress-threshold,hgb-via-RUL,macro_f1,0.9256991512963474,0.8477565810755987,0.9876536771774865
+FD003,binary30,direct,logreg,positive_recall,1.0,1.0,1.0
+FD003,binary30,direct,logreg,positive_f1,0.976143530238121,0.9166666666666666,1.0
+FD003,binary30,regress-threshold,hgb-via-RUL,positive_recall,0.9006216942158534,0.75,1.0
+FD003,binary30,regress-threshold,hgb-via-RUL,positive_f1,0.9226423434905898,0.8125,1.0

@@ -1,0 +1,17 @@
+numpy==2.5.3
+pandas==3.0.6
+scikit-learn==1.9.1
+scipy==1.18.1
+matplotlib==3.11.2
+seaborn==0.13.2
+torch==2.14.1
+pyyaml==6.0.3
+pytest==9.1.1
+jupyter==1.1.1
+nbconvert==7.17.2
+python-pptx==1.0.2
+python-docx==1.2.0
+streamlit==1.66.0
+shap==0.53.0
+xgboost==3.4.1
+lightgbm==4.7.0
