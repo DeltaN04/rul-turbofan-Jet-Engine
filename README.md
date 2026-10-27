@@ -69,10 +69,34 @@ pip install -r requirements.txt     # 1) install
 python run_pipeline.py --smoke      # 2) ~2 min sanity run (fast configs)
 python run_pipeline.py --fresh      # 3) full run, ~2.2 h CPU, seeds 42–44
 streamlit run app.py                # 4) demo: engine history → RUL + alert
-pytest tests/ -q                    # 5) 11 tests incl. leakage regression guards
+pytest tests/ -q                    # 5) 12 tests incl. leakage regression guards
 ```
 
 `--fresh` recomputes everything; `--only=FD001,FD003` runs a subset; `make all` chains the full build from a clean clone (see `run_all.sh`).
+
+## Run the Demo
+
+```bash
+# 1. Install dependencies
+pip install -r requirements.txt
+
+# 2. Ensure pipeline results exist (if not, run the pipeline first)
+#    python run_pipeline.py --smoke   # quick 2-min run for demo data
+
+# 3. Launch the Streamlit dashboard
+streamlit run app.py
+```
+
+The app opens at **http://localhost:8501** with six pages (sidebar navigation):
+
+1. **Overview** — project summary, headline metrics per subset, subset selector
+2. **Engine Monitor** — select a test engine (or upload CSV), replay with cycle slider, see predicted RUL with conformal intervals, alert badge (green/amber/red), true RUL if available, and top sensor trends
+3. **Fleet View** — sortable/filterable table of all test engines with predicted/true RUL and alert, plus alert-count bar chart
+4. **Model Performance** — master regression/classification tables, confusion matrices, PR/ROC curves, lead-time distributions, bootstrap CIs
+5. **Cost & Alert Policy** — interactive cost-ratio slider (missed failure : false alarm), OOF-optimal threshold, test cost/recall/precision
+6. **About / Limitations** — simulated data caveats, validation protocol, human-in-the-loop, AI-assistance disclosure
+
+All numbers in the app are loaded from `results/` and `models/` — no recomputation, no mock data. First load ~10–15 s (model + data cached), interactions ~1–2 s.
 
 ## Repository layout
 

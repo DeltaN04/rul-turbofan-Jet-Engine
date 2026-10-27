@@ -1,0 +1,5 @@
+fd,n_engines,safe,warning,critical,positive_bin30,negative_bin30,note
+FD001,100,67,20,13,25,75,counts at LAST cycle per engine (official evaluation)
+FD002,259,171,35,53,61,198,counts at LAST cycle per engine (official evaluation)
+FD003,100,71,16,13,20,80,counts at LAST cycle per engine (official evaluation)
+FD004,248,168,40,40,53,195,counts at LAST cycle per engine (official evaluation)

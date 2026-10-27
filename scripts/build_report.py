@@ -255,8 +255,10 @@ def main():
         "Models and rationale. Ridge (linear reference) and mean-RUL (floor); Random Forest and "
         "HistGradientBoosting (nonlinear tabular workhorses; XGBoost/LightGBM wheels require system libomp, "
         "absent on this machine — HGB is the honest boosting representative); MLP (dense nonlinear baseline); "
-        "1D-CNN and 1-layer LSTM on causal windows (sequence inductive bias), early stopping on by-engine holdout, "
-        "seeds 42–44. Classification is done both directly (logreg/RF/HGB with class weights) and as "
+        "1D-CNN and 1-layer LSTM on causal windows (sequence inductive bias), early stopping on a single 20% "
+        "by-engine holdout (seeds 42–44). Note: deep models use a single holdout split while all other models "
+        "use grouped 5-fold CV; their holdout scores are not directly comparable to CV means and are marked "
+        "separately in tables. Classification is done both directly (logreg/RF/HGB with class weights) and as "
         "RUL-regress-then-threshold, compared head to head. Tuning: RandomizedSearch over HGB (5-fold grouped CV). "
         "Imbalance: class_weight balanced (ablated off). Thresholds: out-of-fold RUL predictions of the deployed "
         "model at random truncation points per engine; pick the smallest-cost threshold subject to OOF recall "
@@ -293,7 +295,8 @@ def main():
                 f"{_b2:.2f}→{_b2n:.2f} and FD004 HGB {_b4:.2f}→{_b4n:.2f}; single-condition subsets are flat "
                 f"(FD001 {_b1:.2f}→{_b1n:.2f} mixes the 100→300 estimator change — at fixed 100-iter capacity the "
                 f"fix is {_f1:.2f}→{_f1n:.2f}, i.e. neutral-to-positive). "
-                "Deep models trail boosting by 1–4 RMSE points everywhere.")
+                "Deep models trail boosting by 1–4 RMSE points everywhere. "
+                "Deep-model scores use a single 20% by-engine holdout (not grouped 5-fold CV); see Methodology.")
     cvtab = []
     for fd in FDS:
         for _, r in reg[reg.fd == fd].iterrows():
@@ -336,7 +339,35 @@ def main():
     interp(doc, "Direct classifiers and regress-then-threshold are within noise of each other on macro-F1; the "
                 f"regress-then-threshold path wins 3-class macro-F1 on FD001 ({_rt:.3f} vs {_dh:.3f} for direct HGB) because "
                 "the RUL ordering regularises boundaries. Small test sets (13 critical engines on FD001/FD003) "
-                "mean one engine shifts recall by ~8 points — hence the bootstrap CIs below.")
+                "mean one engine shifts recall by ~8 points — hence the bootstrap CIs below. "
+                "The critical class has few engines (13 on FD001/FD003, 40–53 on FD002/FD004), so its CIs are wide.")
+    # Per-class precision/recall Wilson 95% CIs (last cycle, official evaluation)
+    cicitab = []
+    try:
+        cici = pd.read_csv(RES / "test_classification_cis_last_cycle.csv")
+        for fd in FDS:
+            cici_fd = cici[cici.fd == fd]
+            for model in ["logreg", "rf", "hgb", "hgb-via-RUL"]:
+                for approach in ["direct", "regress-threshold"]:
+                    sub = cici_fd[(cici_fd.model == model) & (cici_fd.approach == approach)]
+                    if sub.empty:
+                        continue
+                    for _, r in sub.iterrows():
+                        if r["metric"] in ("precision", "recall"):
+                            sup_true = r.get("support_true", 0)
+                            sup_pred = r.get("support_pred", 0)
+                            support = int(sup_true) if not pd.isna(sup_true) else (int(sup_pred) if not pd.isna(sup_pred) else 0)
+                            cicitab.append({"subset": fd, "model": model, "approach": approach,
+                                            "class": r["class"], "metric": r["metric"],
+                                            "value": round(r["value"], 3),
+                                            "95% CI": f"[{r['ci_lo']:.3f}, {r['ci_hi']:.3f}]",
+                                            "support": support})
+        if cicitab:
+            add_table(doc, pd.DataFrame(cicitab),
+                      "Per-class precision/recall with Wilson 95% CIs (last cycle per engine, official evaluation). "
+                      "Best model and main baselines (logreg, rf, hgb, hgb-via-RUL).")
+    except FileNotFoundError:
+        pass
     for fd in FDS:
         h3 = clfcv.get(fd, {}).get("head3", "hgb")
         hb = clfcv.get(fd, {}).get("headb", "hgb")
