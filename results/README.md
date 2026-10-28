@@ -12,5 +12,5 @@
 - `ablations.csv` ← (subset,ablation,setting,metric_name,cv_mean,cv_std,test_value); `deep_window_ablation.csv` ← LSTM/CNN × {20,30,50}
 - `before_after.csv` ← v1→v2 comparison (regression capped RMSE/PHM_cap + classification macro-F1/critical recall)
 - `test_class_counts.csv` ← all-rows test class counts; `wallclock.json` ← per-subset runtimes
-- `results_v1/` + `figures_v1/` ← frozen v1 outputs for the before/after comparison
+- v1 output folders (`results_v1/`, `figures_v1/`) were removed as duplicates of `results/` + `figures/`; the v1→v2 numbers survive in `before_after.csv`, and the files are recoverable from git history
 - figures ← `run_pipeline` (per-subset) + `scripts/build_extra_charts.py` (cross-cutting: pipeline diagram, compare bars, cost, ablations, conformal calibration, deep window)

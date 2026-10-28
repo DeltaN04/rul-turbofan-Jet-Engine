@@ -32,7 +32,7 @@ slides 13 + notes; viva 50 Q&A with v2 numbers.
 - A9: Mondrian (RUL-bin) conformal on deployed model, OOF residuals, overwrite mode, coverage ± SE + width per bin.
 - A10: condnorm plots on informative sensors; test class counts; `results/ablations.csv`; multi-seed; loud reuse log; new tests.
 
-## v1 (baseline, saved in `results_v1/` / `figures_v1/`)
+## v1 (baseline — output folders removed as duplicates; v1→v2 numbers kept in `results/before_after.csv`)
 - FD001 HGB test RMSE 12.79 (true) / 11.63 (capped); FD002 MLP 27.14; FD003 HGB 13.87; FD004 MLP 29.53.
 - Known issues: smooth-before-normalise (A1); test-set model selection (A2); fast configs (A3);
   no deep models on FD002/FD004 (A4); duplicated/wide classification rows (A5); threshold/model mismatch (A6);
